@@ -39,7 +39,7 @@ public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.MyViewHo
         holder.count.setText(String.valueOf(modal.getZeroText()));
         holder.imageView.setImageResource(modal.getImageForCard());
         holder.subject.setText(modal.getSubjectText());
-        holder.lastWeek.setVisibility(View.VISIBLE);
+        holder.lastWeek.setVisibility(View.GONE);
         if (modal.getLastWeek().charAt(0) == '-'){
             holder.lastWeek.setTextColor(Color.parseColor("#FF414D"));
         }

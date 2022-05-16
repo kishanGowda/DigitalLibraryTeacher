@@ -24,7 +24,12 @@ public class WebView extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         setContentView(R.layout.activity_youtube);
 
-
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            link= extras.getString("key");
+            title=extras.getString("title");
+            //The key argument here must match that used in the other activity
+        }
         back=findViewById(R.id.back_youtube_pdf);
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,12 +39,9 @@ public class WebView extends AppCompatActivity {
         });
 
 
-        Bundle extras = getIntent().getExtras();
-        if (extras != null) {
-            link= extras.getString("key");
-            title=extras.getString("title");
-            //The key argument here must match that used in the other activity
-        }
+
+
+
         webView();
 
         SwipeRefreshLayout swipeRefreshLayout = (SwipeRefreshLayout)findViewById(R.id.videos);

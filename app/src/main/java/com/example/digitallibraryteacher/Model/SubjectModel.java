@@ -3,8 +3,9 @@ package com.example.digitallibraryteacher.Model;
 public class SubjectModel {
     String subjectName,chapters;
     int ntsCount,vdoCount,quesCount,subjectId,standardId;
+    String icon;
 
-    public SubjectModel(String subjectName, String chapters, int ntsCount, int vdoCount, int quesCount, int subjectId, int standardId) {
+    public SubjectModel(String subjectName, String chapters, int ntsCount, int vdoCount, int quesCount, int subjectId, int standardId,String icon) {
         this.subjectName = subjectName;
         this.chapters = chapters;
         this.ntsCount = ntsCount;
@@ -12,6 +13,7 @@ public class SubjectModel {
         this.quesCount = quesCount;
         this.subjectId=subjectId;
         this.standardId=standardId;
+        this.icon=icon;
     }
 
     public String getSubjectName() {
@@ -40,5 +42,9 @@ public class SubjectModel {
 
     public int getStandardId() {
         return standardId;
+    }
+
+    public String getIcon() {
+        return icon;
     }
 }

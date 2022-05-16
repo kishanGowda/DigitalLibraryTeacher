@@ -111,8 +111,6 @@ public class TopicFragment extends Fragment {
                 List<GetTopicsResponse> getTopicsResponse = response.body();
                 topicModels = new ArrayList<>();
                 int topicSize = getTopicsResponse.size();
-                Log.i("topicSize", String.valueOf(topicSize));
-                Log.i("count", getTopicsResponse.get(0).getQuesBankCount());
                 if (topicSize == 0) {
                     linearLayout = view.findViewById(R.id.no_topic2_avialbale_);
                     linearLayout.setVisibility(View.VISIBLE);

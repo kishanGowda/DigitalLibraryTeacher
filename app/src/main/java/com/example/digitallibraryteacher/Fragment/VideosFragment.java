@@ -110,7 +110,7 @@ public class VideosFragment extends Fragment {
                 {
                     videoModel=new ArrayList<>();
                     for(int i=0;i<=size-1;i++){
-                        videoModel.add(new VideoModelTwo(R.drawable.mapchem,R.drawable.ic_baseline_more_vert_24,getLibraryResponse.contents.get(i).title,"12:00",getLibraryResponse.contents.get(i).link,getLibraryResponse.contents.get(i).file,getLibraryResponse.contents.get(i).status));
+                        videoModel.add(new VideoModelTwo(R.drawable.videos,R.drawable.ic_baseline_more_vert_24,getLibraryResponse.contents.get(i).title,"12:00",getLibraryResponse.contents.get(i).link,getLibraryResponse.contents.get(i).file,getLibraryResponse.contents.get(i).status));
 
                     }
                     buildR();

@@ -148,7 +148,13 @@ View view;
                     Toast.makeText(getContext(), "0", Toast.LENGTH_LONG).show();
                 } else {
                     for (int j = 0; j<=i-1; j++) {
-                        subjectModels.add(new SubjectModel(standard.subjects.get(j).subjects_name, String.valueOf(standard.subjects.get(j).chapterCount), Integer.valueOf(standard.subjects.get(j).notesCount), Integer.valueOf(standard.subjects.get(j).videoCount), Integer.valueOf(standard.subjects.get(j).quesBankCount),standard.subjects.get(j).subjects_id,standard.data.get(0).standard_id));
+                        subjectModels.add(new SubjectModel(standard.subjects.get(j).subjects_name,
+                                String.valueOf(standard.subjects.get(j).chapterCount+" Chapters"),
+                                Integer.valueOf(standard.subjects.get(j).notesCount),
+                                Integer.valueOf(standard.subjects.get(j).videoCount),
+                                Integer.valueOf(standard.subjects.get(j).quesBankCount),
+                                standard.subjects.get(j).subjects_id,standard.data.get(0).standard_id,
+                                standard.subjects.get(j).icon));
                     }
 //                    for (SubjectModel s:
 //                         subjectModels) {

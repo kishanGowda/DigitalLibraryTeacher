@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Filter;
 import android.widget.Filterable;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.digitallibraryteacher.Fragment.ChapterFragment;
 import com.example.digitallibraryteacher.Model.SubjectModel;
 import com.example.digitallibraryteacher.R;
+import com.example.digitallibraryteacher.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +37,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewHo
 
     private OnItemClickListener onItemClickListener;
     String section,standard;
+    private static final String baseUrlForImages = "https://s3.ap-south-1.amazonaws.com/test.files.classroom.digital/";
 
 
 
@@ -64,7 +67,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewHo
         holder.subjectName.setText(currentCards.getSubjectName());
         holder.chapters.setText(currentCards.getChapters());
         holder.ntsCount.setText(String.valueOf(currentCards.getNtsCount()));
-
+        Utils.fetchSvg(context,baseUrlForImages+currentCards.getIcon(),holder.icon);
         holder.vdoCount.setText(String.valueOf(currentCards.getVdoCount()));
         holder.quesCount.setText(String.valueOf(currentCards.getQuesCount()));
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -102,6 +105,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewHo
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView subjectName, chapters, ntsCount, vdoCount, quesCount;
+        ImageView icon;
 
         public MyViewHolder(@NonNull View itemView,OnItemClickListener listener) {
             super(itemView);
@@ -110,6 +114,7 @@ public class SubjectAdapter extends RecyclerView.Adapter<SubjectAdapter.MyViewHo
             ntsCount = itemView.findViewById(R.id.notes_count_tv);
             vdoCount = itemView.findViewById(R.id.video_count_tv);
             quesCount = itemView.findViewById(R.id.question_count_tv);
+            icon=itemView.findViewById(R.id.icon_subject);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

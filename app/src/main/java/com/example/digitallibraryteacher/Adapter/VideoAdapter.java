@@ -60,6 +60,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.ViewHolder>
                         link=currentCards.getLink();
                         title=currentCards.getTitle();
                         Log.i("link",link );
+                        Log.i("title", title);
 //                        Fragment fragment = new YoutubeFragment(link,title);
 //                        FragmentManager fragmentManager = ((FragmentActivity) activity).getSupportFragmentManager();
 //                        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();

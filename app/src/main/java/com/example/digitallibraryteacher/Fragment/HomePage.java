@@ -43,6 +43,8 @@ import retrofit2.Retrofit;
 
 public class HomePage extends Fragment {
 View view;
+    private static final String TAG = "HomePage";
+    int lecSize=0;
 
     ArrayList<CountModel> cardHori;
     HomePageResponse homePageGetAllStdResponse,overAllStateResponse;
@@ -67,6 +69,10 @@ View view;
 
 
     RecyclerView.LayoutManager layoutManager1;
+
+    //
+    int   length=0;
+
 
 
     public HomePage() {
@@ -98,27 +104,38 @@ View view;
     }
 
     public void getSubmitAns() {
-        Call<HomePageResponse> call = loginService.getHomepageCall();
-        call.enqueue(new Callback<HomePageResponse>() {
-            @Override
-            public void onResponse(Call<HomePageResponse> call, Response<HomePageResponse> response) {
-                if (!response.isSuccessful()) {
-                    Toast.makeText(getContext(), response.code(), Toast.LENGTH_LONG).show();
-                }
-                HomePageResponse homePageGetAllStdResponse = response.body();
+        try {
+
+
+            Call<HomePageResponse> call = loginService.getHomepageCall();
+            call.enqueue(new Callback<HomePageResponse>() {
+                @Override
+                public void onResponse(Call<HomePageResponse> call, Response<HomePageResponse> response) {
+                    if (!response.isSuccessful()) {
+                        Toast.makeText(getContext(), response.code(), Toast.LENGTH_LONG).show();
+                    }
+                    HomePageResponse homePageGetAllStdResponse = response.body();
+//                Log.i("response", retrofit.);
                 cardHori = new ArrayList<>();
-                cardHori.add(new CountModel(R.drawable.notes,homePageGetAllStdResponse.getCount().notesCount,"Lecture",String.valueOf(homePageGetAllStdResponse.getCount().lastWeekLectureNotesCount+"  From last week")));
-                cardHori.add(new CountModel(R.drawable.videos,homePageGetAllStdResponse.getCount().videoCount,"videos",String.valueOf(homePageGetAllStdResponse.getCount().lastWeekVideoCount+"  From last week")));
-                cardHori.add(new CountModel(R.drawable.quebank,homePageGetAllStdResponse.getCount().quesBankCount,"Question",String.valueOf(homePageGetAllStdResponse.getCount().lastWeekQuestionBankCount+"  From last week")));
+                Log.i(TAG, ": ");
+                cardHori.add(new CountModel(R.drawable.notes,homePageGetAllStdResponse.count.notesCount,"Lecture",String.valueOf(homePageGetAllStdResponse.count.lastWeekLectureNotesCount+"  From last week")));
+                cardHori.add(new CountModel(R.drawable.videos,homePageGetAllStdResponse.count.videoCount,"videos",String.valueOf(homePageGetAllStdResponse.count.lastWeekVideoCount+"  From last week")));
+                cardHori.add(new CountModel(R.drawable.quebank,homePageGetAllStdResponse.count.quesBankCount,"Question",String.valueOf(homePageGetAllStdResponse.count.lastWeekQuestionBankCount+"  From last week")));
                 buildRecyclerView();
 
-            }
+                }
 
-            @Override
-            public void onFailure(Call<HomePageResponse> call, Throwable t) {
-                Toast.makeText(getContext(), "Error submit :(", Toast.LENGTH_LONG).show();
-            }
-        });
+
+                @Override
+                public void onFailure(Call<HomePageResponse> call, Throwable t) {
+                    Log.i("TAG", String.valueOf(t.getMessage()));
+                    Toast.makeText(getContext(), "Error submit :(", Toast.LENGTH_LONG).show();
+
+                }
+            });
+        }catch (Exception e){
+            Log.i(TAG,"login"+  e.getMessage());
+        }
     }
     public void buildRecyclerView() {
 
@@ -133,7 +150,9 @@ View view;
 
     public void getStudHomeP()
     {
+        Log.i("TAG", "welocome to page");
         Call<HomePageResponse> call=loginService.getHomepageCall();
+        Log.i("TAG", "welocome");
         call.enqueue(new Callback<HomePageResponse>() {
             @Override
             public void onResponse(Call<HomePageResponse> call, Response<HomePageResponse> response) {
@@ -143,22 +162,22 @@ View view;
                 }
                 overAllStateResponse=response.body();
 
-                int lecSize=overAllStateResponse.lectureNotes.size();
-             int   length=overAllStateResponse.lectureNotes.size();
+
+                lecSize=overAllStateResponse.lectureNotes.size();
                 Log.i("length", String.valueOf(length));
                 if(length==0){
                 }
                 else{
 
                 }
-                Log.i("size", String.valueOf(lecSize));
+                Log.i("lecturerSizeCards", String.valueOf(lecSize));
                 if(lecSize==0){
                     foeLecturer.setVisibility(View.GONE);
                 }
                 else {
                     lecturerModels=new ArrayList<>();
                     for (int i = 0; i <= overAllStateResponse.lectureNotes.size() - 1; i++) {
-                        lecturerModels.add(new LecturerModel(R.drawable.sbj_chemistry,overAllStateResponse.lectureNotes.get(i).topic.name,overAllStateResponse.lectureNotes.get(i).chapter.name,overAllStateResponse.lectureNotes.get(i).subject.name,overAllStateResponse.lectureNotes.get(i).file));
+                        lecturerModels.add(new LecturerModel(R.drawable.sbj_chemistry,overAllStateResponse.lectureNotes.get(i).chapter.name,overAllStateResponse.lectureNotes.get(i).topic.name,overAllStateResponse.lectureNotes.get(i).subject.name,overAllStateResponse.lectureNotes.get(i).file));
                     }
                     build();
 
@@ -170,7 +189,7 @@ View view;
                     videoModels=new ArrayList<>();
                     for (int j=0;j<=overAllStateResponse.video.size()-1;j++){
 
-                        videoModels.add(new VideoModel(R.drawable.mapchem,overAllStateResponse.video.get(j).topic.name,overAllStateResponse.video.get(j).chapter.name,overAllStateResponse.video.get(j).subject.name,overAllStateResponse.video.get(j).link,overAllStateResponse.video.get(j).title,overAllStateResponse.video.get(j).status,overAllStateResponse.video.get(j).file));
+                        videoModels.add(new VideoModel(R.drawable.videos,overAllStateResponse.video.get(j).chapter.name,overAllStateResponse.video.get(j).topic.name,overAllStateResponse.video.get(j).subject.name,overAllStateResponse.video.get(j).link,overAllStateResponse.video.get(j).title,overAllStateResponse.video.get(j).status,overAllStateResponse.video.get(j).file));
                     }
                     buildVideo();
                 }
@@ -179,7 +198,7 @@ View view;
                 }else{
                     questionModels=new ArrayList<>();
                     for (int j=0;j<=overAllStateResponse.questionBank.size()-1;j++){
-                        questionModels.add(new QuestionModel(R.drawable.question_banks,overAllStateResponse.questionBank.get(j).topic.name,overAllStateResponse.questionBank.get(j).chapter.name,overAllStateResponse.questionBank.get(j).subject.name,overAllStateResponse.questionBank.get(j).file));
+                        questionModels.add(new QuestionModel(R.drawable.question_banks,overAllStateResponse.questionBank.get(j).chapter.name,overAllStateResponse.questionBank.get(j).topic.name,overAllStateResponse.questionBank.get(j).subject.name,overAllStateResponse.questionBank.get(j).file));
                     }
                     buildQuestion();
                 }
@@ -187,14 +206,16 @@ View view;
             }
             @Override
             public void onFailure(Call<HomePageResponse> call, Throwable t) {
-                Toast.makeText(getContext(), "Error fail in home page", Toast.LENGTH_SHORT).show();
+                Log.i("msg", String.valueOf(t.getMessage()));
+
+                Toast.makeText(getContext(),String.valueOf( t.getMessage()), Toast.LENGTH_SHORT).show();
             }
         });
     }
     public void build(){
         recyclerView = view.findViewById(R.id.for_ln_rv);
         recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+        layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false);
         recyclerView.setLayoutManager(layoutManager);
         lecturerAdapter = new LecturerAdapter(lecturerModels,getActivity());
         recyclerView.setAdapter(lecturerAdapter);
